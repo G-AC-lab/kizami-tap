@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="KIZAMI-T">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png">
-<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" href="./icon-tap-192.png">
+<link rel="apple-touch-icon" href="./icon-tap-192.png">
 <title>KIZAMI ワンタッチ</title>
 <style>
   :root{
@@ -236,7 +236,7 @@
 <script>
 "use strict";
 
-var APP_VER = "T-2026-09-26";
+var APP_VER = "T-2026-09-26b";
 var KEY = "kizami_tap_v1";
 var MAIN_KEYS = ["worktime_v4","worktime_v3","worktime_v2"];
 var canStore = (function(){
@@ -748,8 +748,12 @@ function fetchSets(){
     if(e && e.message === "notfound") return get("../worktime/sets.csv");
     throw e;
   }).then(function(buf){
+    var txt = decodeBuf(buf);
+    if(/^\s*</.test(txt) || txt.indexOf("<html") >= 0 || txt.indexOf("<!DOCTYPE") >= 0){
+      throw new Error("offline");
+    }
     $("fetchNote").textContent = "配布元から読み込んだ。";
-    importSets(decodeBuf(buf));
+    importSets(txt);
   }).catch(function(err){
     if(err && err.message === "notfound"){
       $("fetchNote").textContent = "配布元に sets.csv が置かれていない。管理者に確認する。";
