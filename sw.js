@@ -3,8 +3,8 @@
    区切り版とワンタッチ版は同じサイト内にあるため、控えの名前を分け、
    相手の控えは消さないようにしている。 */
 var PREFIX = "kizami-tap-";
-var CACHE = PREFIX + "3";
-var FILES = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+var CACHE = PREFIX + "4";
+var FILES = ["./", "./index.html", "./manifest.json", "./icon-tap-192.png", "./icon-tap-512.png"];
 /* sets.csv は毎回取りに行くのでここには入れない */
 
 self.addEventListener("install", function(e){
